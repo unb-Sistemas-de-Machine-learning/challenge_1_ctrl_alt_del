@@ -16,3 +16,7 @@ extra_css:
 nav:
   - Home: index.md
   - Participantes: participantes/participantes.md
+  - Canvas: Canvas/Canvas.md
+  - Modelo:
+    - Modelo de ML: Modelo/modelo.md
+    - Coleta de dados: Dados/dados.md
