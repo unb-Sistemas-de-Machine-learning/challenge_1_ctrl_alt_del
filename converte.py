@@ -1,5 +1,6 @@
 from pathlib import Path
 from pypdf import PdfReader
+import logging
 
 #silencia os avisos do pypdf
 #wrong pointing objet sao erros do proprio pypdf
