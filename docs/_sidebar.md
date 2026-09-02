@@ -7,4 +7,3 @@
   - **MODELO**
     - [Modelo de ML](Modelo/modelo.md)
     - [DADOS](Dados/dados.md)
-      
