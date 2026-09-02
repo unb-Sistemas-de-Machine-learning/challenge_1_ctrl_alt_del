@@ -22,7 +22,7 @@
 |----------|---------|--------------|-------|
 | Qual será o formato de dado recebido do usuário|----| Membro X | --/-- |
 | De qual modo as notícias das nossas fontes divergem das encontradas no instagram?|----| Membro X | --/-- |
-| De quais fontes vamos obter nossos dados base, como fazer a validação se a fonte é confiavel?| ---|  | Membro X | --/-- |
+| De quais fontes vamos obter nossos dados base, como fazer a validação se a fonte é confiavel?| ---| Membro X | --/-- |
 
 ###  Usuário
 

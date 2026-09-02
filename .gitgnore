@@ -1,8 +1,8 @@
-venv/
+  venv/
 .venv/
 env/
 *.csv
 *.txt
 *.pdf
 .vscode/
-.idea/
+.idea/ 
