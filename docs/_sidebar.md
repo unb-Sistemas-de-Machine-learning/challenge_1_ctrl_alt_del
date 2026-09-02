@@ -3,7 +3,7 @@
 - [**Home**](/)
 
 - **challenge 1**
-  - [CANVAS](Canvas/Canvas.md)
+  - [**CANVAS**](Canvas/Canvas.md)
   - **MODELO**
     - [Modelo de ML](Modelo/modelo.md)
     - [DADOS](Dados/dados.md)
