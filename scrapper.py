@@ -25,7 +25,7 @@ def baixar_post(url: str, pasta_destino: str):
     print(f"Arquivos salvos com sucesso em: {Path(pasta_destino) / shortcode}")
 
 
-if __name__=="__main__":
-    url_instagram = "https://www.instagram.com/p/DcyvJLAm_m5/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==/"
-    diretorio_customizado = "./downloads_instagram"
-    baixar_post(url_instagram, diretorio_customizado)
+#if __name__=="__main__":
+    #url_instagram = "https://www.instagram.com/p/DcyvJLAm_m5/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==/"
+    #diretorio_customizado = "./downloads_instagram"
+    #baixar_post(url_instagram, diretorio_customizado)
