@@ -1,3 +1,4 @@
 ./download_instagram
 *.jpg
 *.txt
+*.venv
