@@ -26,6 +26,6 @@ def baixar_post(url: str, pasta_destino: str):
 
 
 if __name__=="__main__":
-    url_instagram = "https://www.instagram.com/p/DcyvJLAm_m5/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ==/"
+    url_instagram = "https://www.instagram.com/p/DcodQxUjekq/?utm_source=ig_web_copy_link&igsi=NTc4MTIwNjQ2YQ=="
     diretorio_customizado = "./downloads_instagram"
     baixar_post(url_instagram, diretorio_customizado)
