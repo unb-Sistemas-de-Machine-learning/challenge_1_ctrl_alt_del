@@ -1,11 +1,5 @@
 import "./Button.css"
 
-interface Color {
-    name: string;
-    light: number;
-    alpha?: number;
-}
-
 interface ButtonProps {
   text: string;
   className: string;
