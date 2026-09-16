@@ -24,8 +24,8 @@ const nextConfig: NextConfig = {
             permanent: true,
         },
         {
-            source: '/views/resposta',
-            destination: '/resposta',
+            source: '/views/output',
+            destination: '/output',
             permanent: true,
         },
         ];
@@ -45,8 +45,8 @@ const nextConfig: NextConfig = {
             destination: '/views/input',
         },
         {
-            source: '/resposta',
-            destination: '/views/resposta',
+            source: '/output',
+            destination: '/views/output',
         },
         ];
     },
