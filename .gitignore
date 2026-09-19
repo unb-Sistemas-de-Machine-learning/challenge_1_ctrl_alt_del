@@ -1,2 +1,5 @@
 .env
 *jpg
+unsloth_compiled_cache/
+TreinamentoEFormatacao copy.ipynb
+Falho.ipynb
