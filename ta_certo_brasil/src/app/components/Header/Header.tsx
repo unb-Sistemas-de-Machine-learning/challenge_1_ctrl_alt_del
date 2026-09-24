@@ -1,22 +1,24 @@
 'use client'
+
 import { useRouter } from 'next/navigation'
-import "./Header.css"
+import { Source_Serif_4 } from 'next/font/google'
+
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+})
 
 export default function Header() {
-    const router = useRouter()
+  const router = useRouter()
 
-    return (
-        <div className="flex justify-between items-center violet-border h-8/100 min-h-20 p-2">
-            <div 
-                className="flex justify-between items-center cursor-pointer select-none"
-                onClick={() => router.push('/home')}    
-            >
-            <img 
-                src={'../../favicon.ico'}
-                className="w-15 mr-3"
-                ></img>
-            <h1 className="text-4xl">Tá Certo Brasil?</h1>
-            </div>
-        </div>
-    )
+  return (
+    <header className="violet-border flex h-20 shrink-0 items-center px-6">
+      <h1
+        onClick={() => router.push('/home')}
+        className={`${serif.className} cursor-pointer select-none text-3xl text-zinc-100 transition-opacity hover:opacity-80`}
+      >
+        Tá Certo Brasil?
+      </h1>
+    </header>
+  )
 }
