@@ -1,9 +1,10 @@
 .env
 *jpg
 unsloth_compiled_cache/
-TreinamentoEFormatacao copy.ipynb
 Falho.ipynb
 /modelo_propostas_gguf_v3
 /modelo_propostas_gguf_v3_gguf
 /outputs_propostas/checkpoint-84
 /outputs_propostas
+/modelo_propostas_gguf_v4_gguf
+/modelo_propostas_gguf_v4
