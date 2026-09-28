@@ -25,11 +25,18 @@
    pip install -r requirements.txt
    ```
 
-4. Start the FastAPI development server with auto-reload:
+4. Install Modelo:
+   https://drive.google.com/file/d/1cEZFhgq6wpKavUVH1rmaTO5vZy_jAsxi/view?usp=sharing
+   Coloque ele dentro da pasta "backend/modelo/"
+   ``` powershell
+   ollama create ta-certo-brasil -f ./Modelfile
+   ```
+
+5. Start the FastAPI development server with auto-reload:
    ```bash
    uvicorn app.main:app --reload --port 8000
    ```
-5. Confirm the server is running by verifying health status:
+6. Confirm the server is running by verifying health status:
    ```bash
    curl http://localhost:8000/api/health
    ```

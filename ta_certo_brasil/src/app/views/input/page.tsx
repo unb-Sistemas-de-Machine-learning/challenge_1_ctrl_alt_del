@@ -5,6 +5,7 @@ const API_ORIGIN = API_BASE_URL?.replace(/\/api$/, "");
 import { useState } from "react";
 import PostPreviewPanel from "@/app/components/PostPreviewPanel/PostPreviewPanel";
 import AnalysisResultPanel from "@/app/components/AnalysisResultPanel/AnalysisResultPanel";
+import { analyzePost } from "@/app/services/api";
 import { analyzeScrapy } from "@/app/services/api";
 
 type RespostaIA = {
@@ -47,6 +48,21 @@ export default function Input() {
 
     setinstaScrapy(scrapyResult);
     setUrlInput("");
+
+    const result = await analyzePost({ imageUrl: scrapy.imageUrl, extractedText: scrapy.extractedText, caption: scrapy.caption, shortcode: scrapy.shortcode });
+
+    const mappedResult: RespostaIA = {
+      verdict: result.verdict,
+      responseText: result.responseText,
+      sources: result.sources.map(
+        (source) => `${source.title} - ${source.url}`
+      ),
+      highlightedTerms: result.highlightedTerms,
+    };
+
+    setRespostaIA(mappedResult)
+
+
   } catch (error: any) {
     console.error(error);
     setErrorMessage(
@@ -56,6 +72,7 @@ export default function Input() {
     setIsLoading(false);
   }
 }
+
 
   return (
     <div className="flex flex-col gap-2 p-2">

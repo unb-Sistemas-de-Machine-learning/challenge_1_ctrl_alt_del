@@ -3,8 +3,8 @@ from fastapi import APIRouter, HTTPException
 import re
 from app.schemas.post_schema import InstagramPostSubmissionRequest, PostPreviewPanel
 from app.services.post_preview import InstagramService
-from app.services.insta_scrapy import baixar_post
-from app.services.insta_controller import get_content
+from app.services.analysis_service import AnalysisService
+from app.services.insta_controller import Instagram
 
 
 router = APIRouter()
@@ -19,6 +19,11 @@ def scrapy_post(request: InstagramPostSubmissionRequest):
 
     return InstagramService.get_post_content(request.url)
 
+
+@router.post("/modelo")
+def analyse_response(request: PostPreviewPanel):
+    Instagram.delete_folder(request.shortcode)
+    return AnalysisService.analyze_post(request)
 
 @router.get("/health")
 def health_check():

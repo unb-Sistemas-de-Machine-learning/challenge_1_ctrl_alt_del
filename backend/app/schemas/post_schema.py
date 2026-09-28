@@ -31,3 +31,5 @@ class PostPreviewPanel(BaseModel):
     imageUrl: str
     extractedText: str
     caption: str
+    shortcode: str
+
