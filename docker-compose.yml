@@ -1,0 +1,20 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+    container_name: ta-certo-backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./ta_certo_brasil
+    container_name: ta-certo-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000/api
+      
+    depends_on:
+      - backend

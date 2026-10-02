@@ -4,7 +4,9 @@ Service for handling post analysis logic.
 from app.schemas.post_schema import AnalysisResultResponse
 from app.schemas.post_schema import PostPreviewPanel
 import json
+import os
 import ollama
+
 
 class AnalysisService:
     @staticmethod
