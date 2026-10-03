@@ -1,5 +1,31 @@
 ## Como executar localmente
 
+Fazer um clone do repositório:
+```bash
+git clone https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del.git
+```
+
+Necessário fazer o download do Modelo com fine-tunning:
+```
+https://drive.google.com/file/d/1cEZFhgq6wpKavUVH1rmaTO5vZy_jAsxi/view?usp=sharing
+```
+
+Colocar o arquivo .gguf dentro da pasta:
+``` bash
+ta-certo-brasil/
+│
+├── backend/
+│   ├── app/
+│   │   └─ modelo/
+           └─ mistral-7b-instruct-v0.3.Q4_K_M.gguf
+```
+
+Fazer a instalação:
+``` bash
+cd backend/app/modelo
+ollama create ta-certo-brasil -f Modelfile
+```
+
 ### Backend
 
 Entre na pasta `backend`:
@@ -40,17 +66,3 @@ cd ta_certo_brasil
 npm install
 npm run dev
 ```
-
----
-
-## 🐳 Como executar com Docker
-
-### Backend
-
-Na raiz do projeto:
-
-``` bash
-docker compose up --build
-```
-
----
