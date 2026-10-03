@@ -1,0 +1,6 @@
+.github/skills
+.specify/
+specs/
+venv/
+modelo/mistral-7b-instruct-v0.3.Q4_K_M.gguf
+__pycache__/

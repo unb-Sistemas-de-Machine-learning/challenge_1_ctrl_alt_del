@@ -7,6 +7,7 @@ type PostPreviewPanelProps = {
   urlInput: string;
   onUrlChange: (value: string) => void;
   onSubmit: () => void;
+  isLoading?: boolean;
 };
 
 export default function PostPreviewPanel({
@@ -16,6 +17,7 @@ export default function PostPreviewPanel({
   urlInput,
   onUrlChange,
   onSubmit,
+  isLoading,
 }: PostPreviewPanelProps) {
   return (
     <div className="flex flex-col gap-3 h-full w-full p-3 violet-border">
@@ -37,10 +39,19 @@ export default function PostPreviewPanel({
             Cole o link de um post abaixo para ver a imagem aqui.
           </div>
         )}
-        <p aria-label="Texto obtido da imagem do post" className="text-sm text-zinc-200 leading-relaxed">
-          {extractedText || "O texto extraído da imagem aparece aqui depois da análise."}
+
+        <p
+          aria-label="Texto obtido da imagem do post"
+          className="text-sm text-zinc-200 leading-relaxed"
+        >
+          {extractedText ||
+            "O texto extraído da imagem aparece aqui depois da análise."}
         </p>
-        <p aria-label="Caption do post" className="text-sm text-zinc-500 leading-relaxed">
+
+        <p
+          aria-label="Caption do post"
+          className="text-sm text-zinc-500 leading-relaxed"
+        >
           {caption || "A legenda do post aparece aqui depois da análise."}
         </p>
       </div>
@@ -53,11 +64,13 @@ export default function PostPreviewPanel({
           onChange={(e) => onUrlChange(e.target.value)}
           className="w-24/30 p-2 text-sm text-zinc-100 border border-zinc-700 rounded-sm bg-transparent placeholder:text-zinc-500"
         />
+
         <button
           onClick={onSubmit}
+          disabled={isLoading}
           className="w-6/30 p-2 rounded-sm border border-violet-600 text-sm text-zinc-100 hover:bg-violet-600/10 transition-colors"
         >
-          Enviar
+          {isLoading ? 'Analisando...' : 'Enviar'}
         </button>
       </div>
     </div>
