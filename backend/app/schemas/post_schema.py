@@ -7,7 +7,6 @@ default `422 Unprocessable Entity`.
 """
 
 from pydantic import BaseModel
-from typing import List
 
 class InstagramPostSubmissionRequest(BaseModel):
     url: str = Field(pattern=r'^https?://(www\.)?instagram\.com/p/[A-Za-z0-9_-]+/?(\?.*)?$')
@@ -20,8 +19,6 @@ class Source(BaseModel):
 class AnalysisResultResponse(BaseModel):
     verdict: str
     responseText: str
-    sources: List[Source]
-    highlightedTerms: List[str]
 
 class ErrorResponse(BaseModel):
     detail: str

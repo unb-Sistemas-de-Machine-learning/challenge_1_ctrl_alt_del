@@ -9,10 +9,8 @@ import { analyzePost } from "@/app/services/api";
 import { analyzeScrapy } from "@/app/services/api";
 
 type RespostaIA = {
-  verdict?: 'real' | 'fake';
+  verdict?: 'real' | 'fake' | 'Não trata-se de uma proposta de governo';
   responseText?: string;
-  sources?: string[];
-  highlightedTerms?: string[];
 };
 
 type instaScrapy = {
@@ -54,10 +52,6 @@ export default function Input() {
     const mappedResult: RespostaIA = {
       verdict: result.verdict,
       responseText: result.responseText,
-      sources: result.sources.map(
-        (source) => `${source.title} - ${source.url}`
-      ),
-      highlightedTerms: result.highlightedTerms,
     };
 
     setRespostaIA(mappedResult)
@@ -89,8 +83,6 @@ export default function Input() {
         <AnalysisResultPanel
           verdict={respostaIA.verdict}
           responseText={respostaIA.responseText}
-          sources={respostaIA.sources}
-          highlightedTerms={respostaIA.highlightedTerms}
         />
       </div>
       {errorMessage && <div className="text-red-500 text-sm">{errorMessage}</div>}

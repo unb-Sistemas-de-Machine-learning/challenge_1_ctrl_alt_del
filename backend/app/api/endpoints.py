@@ -5,9 +5,11 @@ from app.schemas.post_schema import InstagramPostSubmissionRequest, PostPreviewP
 from app.services.post_preview import InstagramService
 from app.services.analysis_service import AnalysisService
 from app.services.insta_controller import Instagram
+from app.services.ocr_service import TesseractOCR
 
 
 router = APIRouter()
+tesseract_ocr = TesseractOCR()
 
 @router.post("/scrapy", response_model=PostPreviewPanel)
 def scrapy_post(request: InstagramPostSubmissionRequest):
@@ -22,8 +24,9 @@ def scrapy_post(request: InstagramPostSubmissionRequest):
 
 @router.post("/modelo")
 def analyse_response(request: PostPreviewPanel):
+    text = tesseract_ocr.extract_text_from_image(request.shortcode)
     Instagram.delete_folder(request.shortcode)
-    return AnalysisService.analyze_post(request)
+    return AnalysisService.analyze_post(request, text)
 
 @router.get("/health")
 def health_check():
