@@ -52,7 +52,6 @@ class Instagram:
     @staticmethod
     def delete_folder(shortcode):
         path = Path("data/instagram/" + shortcode)
-        print(path)
         try:
             shutil.rmtree(path)
             return "Folder deletada {shortcode}"

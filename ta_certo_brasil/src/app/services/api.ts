@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE_URL = 'http://localhost:8000/api';
 
 export interface Source {
   title: string;
@@ -6,10 +6,8 @@ export interface Source {
 }
 
 export interface AnalysisResultResponse {
-  verdict: 'real' | 'fake';
+  verdict: 'real' | 'fake' | 'Não trata-se de uma proposta de governo';
   responseText: string;
-  sources: Source[];
-  highlightedTerms: string[];
 }
 
 export interface InstagramPostResponse  {

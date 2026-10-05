@@ -1,56 +1,46 @@
 ## Como executar localmente
 
-### Backend
-
-Entre na pasta `backend`:
-
+### Fazer um clone do repositório:
 ```bash
-cd backend
+git clone https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del.git
 ```
 
-Crie um ambiente virtual:
- **Windows**:
+### Instalar ollama:
+Windows:
 ``` bash
-python -m venv venv
-.\venv\Scripts\Activate.ps1
+irm https://ollama.com/install.ps1 | iex
 ```
- **Linux / macOS**:
-```bash
-   python3 -m venv venv
-   source venv/bin/activate
-```
-
-Instale as dependências:
+Linux:
 ``` bash
-pip install -r requirements.txt
+curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-Execute:
+### Necessário fazer o download do Modelo com fine-tunning:
+```
+https://drive.google.com/file/d/1cEZFhgq6wpKavUVH1rmaTO5vZy_jAsxi/view?usp=sharing
+```
+
+### Inserir o arquivo .gguf dentro da pasta:
+``` bash
+ta-certo-brasil/
+│
+├── modelo/
+       └─ mistral-7b-instruct-v0.3.Q4_K_M.gguf
+```
+
+### Fazer a instalação:
+``` bash
+cd challenge_1_ctrl_alt_del/modelo
+ollama create ta-certo-brasil -f Modelfile
+```
+
+### Executar modelo:
 ```bash
-uvicorn app.main:app --reload
+ollama run ta-certo-brasil
 ```
 
-
-### FrontEnd
-
-Em outro terminal
-
-```bash
-cd ta_certo_brasil
-npm install
-npm run dev
-```
-
----
-
-## 🐳 Como executar com Docker
-
-### Backend
-
-Na raiz do projeto:
-
+### Executar com Docker:
+#### Vá até a raiz do projeto:
 ``` bash
 docker compose up --build
 ```
-
----
