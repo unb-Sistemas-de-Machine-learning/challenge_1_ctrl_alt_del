@@ -1,17 +1,18 @@
 import ollama
 from app.schemas.post_schema import PostPreviewPanel
 import json
+import os
 
 class ModeloService:
 
     def __init__(self):
-        self.model = "ta-certo-brasil"
+        self.model = ollama.Client(host=os.getenv("OLLAMA_HOST"))
 
     def response_model(self,post: PostPreviewPanel, text: str):
         conteudo = "Título do POST: " + post.extractedText + " Descrição do Post: " + post.caption + " \n Textos de imagem do post: " + text
 
-        resposta = ollama.chat(
-            model=self.model,
+        resposta = self.model.chat(
+            model=os.getenv("OLLAMA_MODEL"),
             messages=[
                 {
                     "role": "system",
