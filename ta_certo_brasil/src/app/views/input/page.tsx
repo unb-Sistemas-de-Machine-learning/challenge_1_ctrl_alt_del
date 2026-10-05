@@ -7,6 +7,7 @@ import PostPreviewPanel from "@/app/components/PostPreviewPanel/PostPreviewPanel
 import AnalysisResultPanel from "@/app/components/AnalysisResultPanel/AnalysisResultPanel";
 import { analyzePost } from "@/app/services/api";
 import { analyzeScrapy } from "@/app/services/api";
+import Header from "@/app/components/Header/Header";
 
 type RespostaIA = {
   verdict?: 'real' | 'fake' | 'Não trata-se de uma proposta de governo';
@@ -70,6 +71,9 @@ export default function Input() {
 
   return (
     <div className="flex flex-col gap-2 p-2">
+      <div className="flex flex-row gap-4 min-h-15 w-full min-w-150">
+        <Header></Header>
+      </div>
       <div className="flex flex-row gap-4 h-full min-h-150 w-full min-w-150">
         <PostPreviewPanel
           urlInput={urlInput}

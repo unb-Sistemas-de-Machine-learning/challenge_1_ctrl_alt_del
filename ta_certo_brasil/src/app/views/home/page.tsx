@@ -38,27 +38,20 @@ export default function Home() {
 
   return (
     <div className="violet-border flex h-screen flex-col bg-zinc-950">
-
       <div className="min-h-0 flex-1 overflow-y-auto px-6 py-10 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
-
         <div className="mx-auto flex w-full max-w-[65ch] flex-col items-center gap-10">
-
         
           <div className="flex max-w-[38ch] flex-col items-center gap-4 text-center">
-
             <h1
               className={`${serif.className} text-5xl leading-tight text-zinc-100`}
             >
               Tá certo, Brasil?
             </h1>
-
             <p className="text-base leading-relaxed text-zinc-400">
               Verificação de notícias eleitorais do Instagram, feita para
               quem vai votar pela primeira vez.
             </p>
-
           </div>
-
 
           <p className="w-full text-center text-base leading-7 text-zinc-300">
             Ajudamos jovens eleitores a saber se uma notícia compartilhada
@@ -69,15 +62,12 @@ export default function Home() {
 
           {/* O que verificamos */}
           <div className="flex w-full flex-col gap-6">
-
             <h2
               className={`${serif.className} border-b border-zinc-800 pb-3 text-2xl text-zinc-100`}
             >
               O que verificamos
             </h2>
-
             <ul className="flex flex-col gap-5">
-
               {checks.map((item) => (
                 <li
                   key={item.title}
@@ -96,38 +86,28 @@ export default function Home() {
                   </div>
                 </li>
               ))}
-
             </ul>
-
           </div>
-
           
           <div className="h-4 shrink-0" />
-
         </div>
-
       </div>
 
 
       <div className="shrink-0 border-t border-zinc-800 bg-zinc-950 px-6 py-4">
-
         <div className="mx-auto flex w-full max-w-[65ch] justify-center">
-
           <Button
             text="Começar"
             className="violet-border h-10 w-35 rounded-md transition-colors hover:bg-violet-500/10"
             onClick={() => setIsTermsOpen(true)}
           />
-
         </div>
-
       </div>
 
       <TermsCard
         isOpen={isTermsOpen}
         onClose={() => setIsTermsOpen(false)}
       />
-
     </div>
   );
 }
