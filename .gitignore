@@ -4,3 +4,4 @@ specs/
 venv/
 modelo/models/*.gguf
 __pycache__/
+.env

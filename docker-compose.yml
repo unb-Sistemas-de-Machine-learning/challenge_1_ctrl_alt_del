@@ -3,22 +3,24 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        FRONTEND_URL: ${FRONTEND_URL}
+        USER: ${USER}
+        PASSWORD: ${PASSWORD}
     container_name: ta-certo-backend
     ports:
       - "8000:8000"
     environment:
-      OLLAMA_HOST: http://host.docker.internal:11434
       OLLAMA_MODEL: ta-certo-brasil
-      FRONTEND_URL: http://localhost:3000
 
   frontend:
     build:
       context: ./ta_certo_brasil
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
     container_name: ta-certo-frontend
     ports:
       - "3000:3000"
-    environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8000/api
     depends_on:
       - backend
 

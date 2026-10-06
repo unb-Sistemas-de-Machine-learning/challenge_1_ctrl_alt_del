@@ -5,6 +5,14 @@
 git clone https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del.git
 ```
 
+
+### Instalação de variáveis de ambiente:
+```bash
+cp .\.env.example .env  
+```
+- Configure o **.env**
+
+
 ### Instalar ollama:
 Windows:
 ``` bash
