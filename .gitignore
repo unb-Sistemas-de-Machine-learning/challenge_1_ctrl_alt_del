@@ -1,0 +1,6 @@
+.github/skills
+.specify/
+specs/
+venv/
+modelo/models/*.gguf
+__pycache__/
