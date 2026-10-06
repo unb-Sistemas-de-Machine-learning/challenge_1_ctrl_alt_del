@@ -3,14 +3,13 @@ services:
   backend:
     build:
       context: ./backend
-      args:
-        FRONTEND_URL: ${FRONTEND_URL}
-        USER: ${USER}
-        PASSWORD: ${PASSWORD}
     container_name: ta-certo-backend
     ports:
       - "8000:8000"
     environment:
+      FRONTEND_URL: ${FRONTEND_URL}
+      USUARIO: ${USUARIO}
+      PASSWORD: ${PASSWORD}
       OLLAMA_MODEL: ta-certo-brasil
 
   frontend:
