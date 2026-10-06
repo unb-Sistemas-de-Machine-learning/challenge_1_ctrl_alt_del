@@ -31,7 +31,7 @@ class BlueskyBot:
     def send_post(message: str, verdict: str, url: str):
         try:
             client = Client()
-            client.login(os.getenv("USER"), os.getenv("PASSWORD"))
+            client.login(os.getenv("USUARIO"), os.getenv("PASSWORD"))
             if verdict == "real":
                 post = BlueskyBot.real(message, url)
                 client.send_post(post)
