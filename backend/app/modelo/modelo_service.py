@@ -1,5 +1,6 @@
 import ollama
 from app.schemas.post_schema import PostPreviewPanel
+from app.services.bluesky_bot import BlueskyBot
 import json
 import os
 
@@ -86,6 +87,5 @@ class ModeloService:
         response = resposta["message"]["content"]
 
         data = json.loads(response)
-
 
         return data

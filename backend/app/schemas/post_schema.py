@@ -30,3 +30,8 @@ class PostPreviewPanel(BaseModel):
     caption: str
     shortcode: str
 
+class BlueSkyResponse (BaseModel):
+  verdict: str
+  responseText: str
+  url: str
+
