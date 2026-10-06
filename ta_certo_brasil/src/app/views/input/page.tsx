@@ -7,6 +7,7 @@ import PostPreviewPanel from "@/app/components/PostPreviewPanel/PostPreviewPanel
 import AnalysisResultPanel from "@/app/components/AnalysisResultPanel/AnalysisResultPanel";
 import { analyzePost } from "@/app/services/api";
 import { analyzeScrapy } from "@/app/services/api";
+import { blueskypost } from "@/app/services/api";
 
 type RespostaIA = {
   verdict?: 'real' | 'fake' | 'Não trata-se de uma proposta de governo';
@@ -56,6 +57,7 @@ export default function Input() {
 
     setRespostaIA(mappedResult)
 
+    await blueskypost({ verdict: result.verdict, responseText: result.responseText, url: urlInput });
 
   } catch (error: any) {
     console.error(error);
@@ -65,6 +67,8 @@ export default function Input() {
   } finally {
     setIsLoading(false);
   }
+
+  
 }
 
 
