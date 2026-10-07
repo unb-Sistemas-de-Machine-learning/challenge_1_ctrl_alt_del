@@ -101,8 +101,14 @@ class ModeloService:
                 "max_tokens": 512,
                 "temperature": 0.1
             }
-            response = requests.post(self.api_url, json=payload, timeout=60)
-            response_text = response.json()["response"]
+            response = requests.post(
+                f"{self.api_url}/v1/chat/completions",
+                json=payload,
+                timeout=300
+            )
+            response_data = response.json()
+
+            response_text = response_data["choices"][0]["message"]["content"]
 
         clean_text = response_text.strip()
         data = json.loads(clean_text)
