@@ -33,9 +33,13 @@ nav:
       - Canvas: Canvas/canvas.md
       - Guiding Questions: Canvas/guiding-questions.md
   - Projeto:
-      - Modelo: projeto/modelo.md
+      - Modelo: 
+          - Modelo: projeto/modelo.md
+          - Fine-tunning: projeto/fine-tunning.md
       - Arquitetura: 
           - Documentação: projeto/arquitetura.md
+      - Frontend:
+          - Api: frontend/api-service.md
       - backend: 
           - Endpoints: backend/endpoints.md
           - Services:

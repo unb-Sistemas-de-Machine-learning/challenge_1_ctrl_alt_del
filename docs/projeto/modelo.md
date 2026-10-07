@@ -1,107 +1,107 @@
-O Modelo utilizado para a realização do Fine-Tunning é **mistral-7b-instruct-v0.3.Q4_K_**
+# Modelo de Machine Learning
 
-Disponível já com o Fine-Tunning: [Ta-certo-milistral](https://huggingface.co/dnfs26/ta-certo-milistral-gguf)
+## Modelo utilizado
 
-# Escolha do modelo de Machine Learning
+O modelo utilizado no projeto é o **Mistral 7B Instruct v0.3**, na versão quantizada **Q4_K_M**.
 
-Para a etapa de inferência do projeto, foi utilizado o modelo Mistral 7B Instruct v0.3, na versão quantizada Q4_K_M.
+O modelo já possui o Fine-Tuning realizado para o projeto e está disponível no Hugging Face:
 
-A escolha desse modelo foi realizada considerando as características e as restrições do projeto, principalmente a necessidade de executar a inferência sem depender de APIs comerciais de modelos de linguagem.
+**[Ta-Certo Mistral GGUF](https://huggingface.co/dnfs26/ta-certo-milistral-gguf)**
 
-## Capacidade de compreensão de texto
+## Escolha do modelo
 
-O sistema precisa analisar textos provenientes de publicações de redes sociais e identificar se o conteúdo apresenta uma proposta de governo. Para isso, o modelo precisa ser capaz de compreender instruções em linguagem natural e analisar o contexto fornecido.
+A escolha do Mistral 7B foi feita considerando as necessidades do projeto e os recursos computacionais disponíveis.
 
-O Mistral 7B Instruct é uma versão voltada para tarefas orientadas por instruções, sendo adequada para receber um prompt contendo as regras de classificação e retornar uma resposta estruturada.
+O modelo possui capacidade de compreender textos e seguir instruções, sendo adequado para analisar o conteúdo de publicações e classificá-las de acordo com as regras definidas para o projeto.
 
-No projeto, o modelo recebe o conteúdo obtido da publicação, incluindo o texto extraído da imagem e informações textuais do post, e realiza a classificação em três categorias:
+A classificação utilizada possui três categorias:
 
-- real;
-- fake;
-- Não trata-se de uma proposta de governo.
+* **Real**
+* **Fake**
+* **Não trata-se de uma proposta de governo**
 
-## Modelo de código aberto e execução local
+Além disso, o modelo consegue gerar uma explicação para a classificação realizada.
 
-Outro fator importante foi a possibilidade de executar o modelo utilizando os próprios recursos computacionais disponíveis, sem a necessidade de contratar uma API de terceiros para cada inferência.
+## Execução local
 
-Isso é importante para o projeto porque permite:
+Um dos requisitos do projeto era evitar a dependência de APIs comerciais de inteligência artificial.
 
-reduzir custos de utilização;
-evitar dependência de serviços comerciais de IA;
-manter o controle sobre o modelo utilizado;
-executar o modelo em ambientes próprios ou de desenvolvimento.
+Por isso, foi utilizado um modelo que pode ser executado localmente. Essa escolha permite:
 
-O formato GGUF também facilita a utilização do modelo com ferramentas baseadas em llama.cpp e servidores compatíveis com sua API.
+* reduzir custos;
+* não depender de serviços externos para realizar as análises;
+* ter maior controle sobre o modelo;
+* executar o modelo em diferentes ambientes.
 
-## Quantização Q4_K_M
+O modelo está no formato **GGUF**, que permite sua execução utilizando ferramentas compatíveis, como o `llama.cpp`.
 
-Foi utilizada a versão Q4_K_M, que corresponde a uma versão quantizada do modelo.
+## Quantização
 
-A quantização reduz a quantidade de memória necessária para armazenar e executar o modelo, tornando possível utilizar um modelo de aproximadamente 7 bilhões de parâmetros em hardware com recursos mais limitados do que seriam necessários para uma versão em maior precisão.
+Foi utilizada a versão **Q4_K_M** do modelo.
 
-Essa característica foi importante para o projeto porque permite utilizar o modelo tanto em ambientes locais quanto em uma máquina com GPU disponibilizada para a execução da inferência.
+A quantização reduz o consumo de memória necessário para executar o modelo, tornando sua utilização mais viável em computadores com recursos limitados.
 
-## Relação entre tamanho e desempenho
+Essa característica foi importante para permitir a execução do modelo tanto durante o desenvolvimento quanto no ambiente de implantação.
 
-Foi escolhido um modelo de aproximadamente 7 bilhões de parâmetros como um equilíbrio entre capacidade de compreensão e custo computacional.
+## Fine-Tuning
 
-Modelos significativamente maiores poderiam apresentar maior custo de execução e exigir mais memória e capacidade computacional, dificultando sua utilização no ambiente disponível para o projeto.
+O modelo base Mistral 7B Instruct v0.3 passou por um processo de **Fine-Tuning** utilizando dados eleitorais de **2026 disponibilizados pelo Tribunal Superior Eleitoral (TSE)**.
 
-Por outro lado, um modelo muito menor poderia apresentar limitações na compreensão do contexto e no seguimento das regras definidas para a classificação.
+Esses dados foram preparados e utilizados no **treinamento supervisionado**, permitindo adaptar o modelo ao contexto do projeto.
 
-Assim, o Mistral 7B foi utilizado como uma alternativa intermediária entre capacidade de processamento de linguagem natural e viabilidade computacional.
+O objetivo do treinamento foi fazer com que o modelo tivesse maior capacidade de identificar e classificar conteúdos relacionados a propostas de governo.
 
-# Utilização no Ta Certo Brasil
+> Os dados utilizados foram previamente analisados e preparados para serem utilizados no processo de Fine-Tuning.
 
-O modelo não é responsável pela coleta das publicações nem pela extração do texto das imagens. Essas tarefas são realizadas pelas demais camadas da aplicação.
+## Utilização no Ta Certo Brasil
 
-O fluxo de utilização do modelo é:
+O modelo é responsável apenas pela etapa de **inferência e classificação**. A coleta da publicação e a extração do texto são realizadas por outras partes da aplicação.
 
-Publicação
-    ↓
+O fluxo de análise é:
+
+```text
+Publicação do Instagram
+        ↓
 Coleta do conteúdo
-    ↓
+        ↓
 OCR
-    ↓
+        ↓
 Texto extraído
-    ↓
+        ↓
 Modelo Mistral 7B
-    ↓
+        ↓
 Classificação
-    ↓
-verdict + responseText
+        ↓
+Resultado
+```
 
-A entrada fornecida ao modelo reúne as informações textuais disponíveis da publicação. A partir dessas informações e das regras definidas no prompt, o modelo produz uma resposta estruturada em JSON.
+O modelo recebe as informações textuais obtidas da publicação e, seguindo as regras definidas no prompt, retorna a classificação e uma explicação.
 
-O formato esperado é:
+O resultado esperado possui o seguinte formato:
 
+```json
 {
   "verdict": "real",
   "responseText": "Explicação breve da classificação."
 }
+```
 
-Dessa forma, o modelo funciona como a camada de inferência, enquanto a coleta, o OCR, a API e a interface são responsabilidades das demais partes da arquitetura.
+## Execução do modelo
 
-# Execução do modelo
+Durante a implantação, o modelo é executado como um **serviço independente** utilizando o `llama-server`.
 
-Durante o desenvolvimento e a implantação, o modelo pode ser executado por meio de um servidor compatível com o formato GGUF. No ambiente utilizado para a implantação, o llama-server disponibiliza uma API HTTP compatível com o padrão de chat, permitindo que o backend FastAPI envie o conteúdo para análise e receba a classificação.
+O servidor disponibiliza uma API HTTP que permite ao backend FastAPI enviar os dados da publicação para o modelo e receber o resultado da análise.
 
-Essa separação também permite manter o modelo como um serviço independente do backend:
+A arquitetura utilizada é:
 
+```text
 Frontend
    ↓
 FastAPI
    ↓
-Serviço de inferência
+Serviço de Inferência
    ↓
 Mistral 7B
+```
 
-Essa arquitetura facilita a substituição ou atualização do modelo sem exigir alterações significativas na interface ou nas demais funcionalidades da aplicação.
-
-## Treinamento Supervisionado
-
-Foi feito Fine-Tunning utilizando **dados de 2026 disponibilizados pelo Tribunal Superior Eleitoral (TSE)**.
-
-Esses dados foram utilizados como base para o processo de **treinamento supervisionado**, permitindo que o modelo identifique padrões e relações presentes nas informações eleitorais.
-
-> Os dados utilizados foram previamente analisados e preparados para garantir sua adequação ao Fine-Tunning do modelo.
+Essa separação permite que o modelo seja atualizado ou substituído sem precisar alterar significativamente o frontend ou as demais funcionalidades do sistema.
