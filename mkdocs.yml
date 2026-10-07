@@ -25,7 +25,7 @@ extra_css:
 
 nav:
   - Home: 
-      - index.md
+      - index: index.md
       - Ferramentas: home/ferramentas.md
       - Dados: home/dados.md
       - Participantes: equipe.md
