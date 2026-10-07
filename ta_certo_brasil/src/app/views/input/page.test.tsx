@@ -1,11 +1,12 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Input from './page';
-import { analyzePost, analyzeScrapy } from '@/app/services/api';
+import { analyzePost, analyzeScrapy, blueskypost } from '@/app/services/api';
 
 vi.mock('@/app/services/api', () => ({
   analyzePost: vi.fn(),
   analyzeScrapy: vi.fn(),
+  blueskypost: vi.fn()
 }));
 
 vi.mock('next/font/google', () => ({
@@ -69,6 +70,11 @@ describe('Input page', () => {
         extractedText: 'Texto extraído',
         caption: 'Legenda do post',
         shortcode: 'post123',
+      });
+      expect(blueskypost).toHaveBeenCalledWith({
+        verdict: 'fake',
+        responseText: 'A análise indica informações falsas.',
+        url: 'https://instagram.com/p/post123',
       });
     });
 
