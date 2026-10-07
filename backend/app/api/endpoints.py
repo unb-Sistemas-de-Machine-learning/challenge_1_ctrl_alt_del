@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi import APIRouter, HTTPException
 import re
+import time
 from app.schemas.post_schema import InstagramPostSubmissionRequest, PostPreviewPanel, BlueSkyResponse
 from app.services.post_preview import InstagramService
 from app.services.analysis_service import AnalysisService
@@ -25,9 +26,24 @@ def scrapy_post(request: InstagramPostSubmissionRequest):
 
 @router.post("/modelo")
 def analyse_response(request: PostPreviewPanel):
+    inicio_total = time.perf_counter()
+
+    inicio_ocr = time.perf_counter()
     text = tesseract_ocr.extract_text_from_image(request.shortcode)
+    fim_ocr = time.perf_counter()
+
+    inicio_modelo = time.perf_counter()
+    resultado = AnalysisService.analyze_post(request, text)
+    fim_modelo = time.perf_counter()
+
     Instagram.delete_folder(request.shortcode)
-    return AnalysisService.analyze_post(request, text)
+    fim_total = time.perf_counter()
+
+    print(f"OCR: {fim_ocr - inicio_ocr:.2f}s")
+    print(f"Modelo: {fim_modelo - inicio_modelo:.2f}s")
+    print(f"Total: {fim_total - inicio_total:.2f}s")
+    
+    return resultado
 
 @router.post("/bluesky")
 def send_post_to_bluesky(request: BlueSkyResponse):

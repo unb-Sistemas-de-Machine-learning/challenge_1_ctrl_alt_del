@@ -1,23 +1,22 @@
 import ollama
+import requests
 from app.schemas.post_schema import PostPreviewPanel
-from app.services.bluesky_bot import BlueskyBot
 import json
 import os
 
 class ModeloService:
 
     def __init__(self):
-        self.model = ollama.Client(host=os.getenv("OLLAMA_HOST"))
+        self.model = os.getenv("MODEL_PROVIDER", "ollama").lower()
 
-    def response_model(self,post: PostPreviewPanel, text: str):
-        conteudo = "Título do POST: " + post.extractedText + " Descrição do Post: " + post.caption + " \n Textos de imagem do post: " + text
+        if self.model == "ollama":
+            self.ollama_client = ollama.Client(host=os.getenv("OLLAMA_HOST"))
+            self.model_name = os.getenv("OLLAMA_MODEL")
+        else:
+            self.api_url = os.getenv("HF_SPACE_URL")
 
-        resposta = self.model.chat(
-            model=os.getenv("OLLAMA_MODEL"),
-            messages=[
-                {
-                    "role": "system",
-                    "content": """
+    def prompt(self) -> str:
+        return """
         Você é um sistema especializado EXCLUSIVAMENTE em verificar propostas de governo.
 
         Sua tarefa é analisar o conteúdo fornecido e determinar se ele apresenta uma proposta de governo.
@@ -71,21 +70,63 @@ class ModeloService:
 
         - Não adicione nenhum campo além de:
         "verdict" e "responseText".
+
+        Se o conteúdo NÃO for uma proposta de governo:
+
+        - "verdict" DEVE ser exatamente:
+        "Não trata-se de uma proposta de governo"
+
+        - "responseText" DEVE existir obrigatoriamente.
+
+        - "responseText" deve ser uma explicação breve informando que o conteúdo não apresenta uma proposta de governo.
+
+        Exemplo obrigatório:
+
+        {
+            "verdict": "Não trata-se de uma proposta de governo",
+            "responseText": "O conteúdo analisado não apresenta uma proposta de governo."
+}
         """
-                },
-                {
-                    "role": "user",
-                    "content": f"""
-        Conteúdo para ser análisado:
 
-        {conteudo}
-        """
-                }
-            ]
-        )
+    def response_model(self,post: PostPreviewPanel, text: str):
+        conteudo = "Título do POST: " + post.extractedText + " Descrição do Post: " + post.caption + " \n Textos de imagem do post: " + text
+        prompt = self.prompt()
+        if self.model == "ollama":
+            resposta = self.ollama_client.chat(
+                model=self.model_name,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": prompt
+                    },
+                    {
+                        "role": "user",
+                        "content": f"Conteúdo para ser analisado:\n\n{conteudo}"
+                    }
+                ]
+            )
 
-        response = resposta["message"]["content"]
+            response_text = resposta["message"]["content"]
+        
+        else:
+            payload = {
+                "messages": [
+                    {"role": "system", "content": prompt},
+                    {"role": "user", "content": f"Conteúdo para ser analisado:\n\n{conteudo}"}
+                ],
+                "max_tokens": 512,
+                "temperature": 0.1
+            }
+            response = requests.post(
+                f"{self.api_url}/v1/chat/completions",
+                json=payload,
+                timeout=300
+            )
+            response_data = response.json()
 
-        data = json.loads(response)
+            response_text = response_data["choices"][0]["message"]["content"]
+
+        clean_text = response_text.strip()
+        data = json.loads(clean_text)
 
         return data
