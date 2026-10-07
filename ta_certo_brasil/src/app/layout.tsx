@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tá Certo Brasil?",
+  title: "Tá Certo, Brasil?",
   description: "Site para checar fake news",
 };
 
