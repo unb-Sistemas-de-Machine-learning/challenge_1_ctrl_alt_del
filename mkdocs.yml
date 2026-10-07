@@ -1,0 +1,63 @@
+repo_name: Ctrl Alt Del
+repo_url: https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del
+site_name: Ctrl Alt Del
+site_url: https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del
+
+docs_dir: docs
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+
+
+extra:
+  announcement: "🚀 Nova versão disponível! Veja as novidades."
+
+copyright: Copyright &copy; 2024 Minha Empresa
+
+extra_css:
+  - stylesheets/style.css
+  - stylesheets/extra.css
+
+
+nav:
+  - Home: 
+      - index.md
+      - Ferramentas: home/ferramentas.md
+      - Dados: home/dados.md
+      - Participantes: equipe.md
+  - Canvas:
+      - Canvas: Canvas/canvas.md
+      - Guiding Questions: Canvas/guiding-questions.md
+  - Projeto:
+      - Modelo: projeto/modelo.md
+      - Arquitetura: 
+          - Documentação: projeto/arquitetura.md
+      - backend: 
+          - Endpoints: backend/endpoints.md
+          - Services:
+            - instaloader: backend/insta_controller.md
+            - ocr_service: backend/ocr_service.md
+            - bluesky: backend/bluesky.md
+          - Main: backend/main.md
+          - Schemas:
+            - Schemas: backend/schemas/schemas.md
+  - Figma:
+      - Figma: figma.md
+  - Site:
+      - TaCertoBrasil: site.md
+
+
+plugins:
+  - git-revision-date-localized:
+      type: date
+      locale: pt_BR
+      enable_creation_date: true

@@ -1,0 +1,117 @@
+/* === Container do pipeline === */
+.pipeline {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, #4f46e5 6%, transparent),
+    color-mix(in srgb, #7c3aed 6%, transparent));
+  border: 1px solid color-mix(in srgb, #4f46e5 20%, transparent);
+}
+
+.pipeline h2 {
+  margin-top: 0 !important;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* === Fluxo (linha horizontal) === */
+.pipeline-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+/* === Cada etapa === */
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 160px;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: var(--md-default-bg-color);
+  border: 2px solid color-mix(in srgb, #4f46e5 35%, transparent);
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.12);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.pipeline-step:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.28);
+  border-color: #4f46e5;
+}
+
+.pipeline-step__icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.pipeline-step__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--md-default-fg-color);
+  text-align: center;
+}
+
+/* === Seta animada === */
+.pipeline-arrow {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #7c3aed;
+  animation: pulse-arrow 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-arrow {
+  0%, 100% { transform: translateX(0); opacity: 0.7; }
+  50%      { transform: translateX(6px); opacity: 1; }
+}
+
+/* === Dark mode === */
+[data-md-color-scheme="slate"] .pipeline {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, #4f46e5 12%, transparent),
+    color-mix(in srgb, #7c3aed 12%, transparent));
+  border-color: color-mix(in srgb, #a5b4fc 25%, transparent);
+}
+
+[data-md-color-scheme="slate"] .pipeline-step {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: color-mix(in srgb, #a5b4fc 40%, transparent);
+}
+
+[data-md-color-scheme="slate"] .pipeline-arrow {
+  color: #a5b4fc;
+}
+
+/* === Mobile === */
+@media (max-width: 600px) {
+  .pipeline-flow {
+    flex-direction: column;
+  }
+  .pipeline-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+.centralizar-div {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    padding: 50px;
+}
+
+.participantes-dupla {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

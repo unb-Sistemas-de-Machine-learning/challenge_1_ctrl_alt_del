@@ -42,9 +42,12 @@ Reduzir votos a partir de informações falsas ou equivocas e o compartilhamento
 
 ## 3. Objetivos de ML
 
-Classificar imagens e textos do Instagram ("Candidato X proprõe/defenderá a medida Y") em verdadeiro ou falso. EX: Com as informaçẽos disponibilizadas pelo TSE / Informação distorcida ou fora de contexto / Falsa — e indicar os trechos dos documentos oficiais que sustentam a análise. Medível no MODELO (ex.: F1-score e acurácia da classificação por categoria).
+Classificar imagens e textos do Instagram ("Candidato X proprõe/defenderá a medida Y") em verdadeiro ou falso. EX: Com as informaçẽos disponibilizadas pelo TSE / Informação distorcida ou fora de contexto / Falsa.
 
 ## 4. Arquitetura
+A arquitetura do sistema será organizada em 3 camadas, seguindo o modelo clássico (Apresentação, Lógica de Negócio e Dados), porém com uma adaptação: a terceira camada (antes responsável apenas pela persistência de dados) será reformulada para incorporar o ciclo de vida de Machine Learning, atuando como uma Camada de inferência no modelo de  Machine Learning.
 
 
 ## 5. Ferramentas
+
+Algumas ferramentas que foram pensadas para a produção do projeto: React (Frontend), Docker (Deixar código em contâiners), Scrapy (Coleta das informações do instagram) e FastAPI (Backend)
