@@ -52,33 +52,31 @@ A arquitetura do sistema é baseada no modelo de três camadas, adaptado às nec
 
 ```
 📁 challenge_1_ctrl_alt_del
-├── .github
-│   └── workflows
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
 │       └── deploy.yml
-├── backend
-│   ├── app
-│   │   ├── api.py
-│   │   │   └── endpoits.py
-│   │   ├── modelo
-│   │   │   └── modelo_service.py
-│   │   ├── schemas
-│   │   │   └── post_schemas.py
-│   │   ├── services
-|   |   |   ├── analysis_service.py
-|   |   |   ├── bluesky_bot.py
-|   |   |   ├── insta_controller.py
-|   |   |   ├── ocr_service.py
-|   |   |   └── post_preview.py
-│   │   └── main.py
-│   └──── data
-│         └── instagram
-├── ta_certo_brasil
-│   ├── src
-│   │   └── app
-│   │       ├── scrapyBaseG1.md
-│   │       ├── ScrapyMetropoles.md
-│   │       ├── scrapyBaseG1.md
-│   │       ├── ScrapyMetropoles.md
-│   │       ├── scrapyBaseG1.md
-│   │       └── ScrapyMetropoles.md
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── schemas/
+│   │   └── services/
+│   ├── Dockerfile
+│   └── requirements.txt
+│
+├── ta_certo_brasil/
+│   ├── src/
+│   ├── tests/
+│   ├── Dockerfile
+│   └── package.json
+│
+├── modelo/
+│   └── Modelfile
+│
+├── tests/
+│
+├── docker-compose.yml
+├── .env.example
+└── README.md
 ```
