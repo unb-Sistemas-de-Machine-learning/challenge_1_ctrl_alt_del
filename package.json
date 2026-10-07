@@ -7,7 +7,7 @@
     "build:frontend": "npm --prefix ta_certo_brasil run build",
     "build:backend": "python -m compileall backend/app",
     "build": "npm run build:backend && npm run build:frontend",
-    "test:frontend": "node --test tests/frontend/api.test.ts",
+    "test:frontend": "node --test tests/frontend/api.test.ts && npm --prefix ta_certo_brasil run test",
     "test:backend": "pytest tests/backend",
     "test": "npm run test:backend && npm run test:frontend"
   }
