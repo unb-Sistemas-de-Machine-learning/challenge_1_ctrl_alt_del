@@ -1,0 +1,2242 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://unb-sistemas-de-machine-learning.github.io/challenge_1_ctrl_alt_del/projeto/fine-tunning/">
+      
+      
+        <link rel="prev" href="../modelo/">
+      
+      
+        <link rel="next" href="../arquitetura/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Fine-tunning - Ctrl Alt Del</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/style.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#treinamento-do-modelo-de-classificacao-de-propostas" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Ctrl Alt Del" class="md-header__button md-logo" aria-label="Ctrl Alt Del" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ctrl Alt Del
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fine-tunning
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Ctrl Alt Del
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Abas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
+          
+  
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Canvas/canvas.md" class="md-tabs__link">
+          
+  
+  
+  Canvas
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../modelo/" class="md-tabs__link">
+          
+  
+  
+  Projeto
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../figma/" class="md-tabs__link">
+          
+  
+  
+  Figma
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../site/" class="md-tabs__link">
+          
+  
+  
+  Site
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ctrl Alt Del" class="md-nav__button md-logo" aria-label="Ctrl Alt Del" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Ctrl Alt Del
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del" title="Ir para repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Ctrl Alt Del
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Home
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home/ferramentas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ferramentas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home/dados/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dados
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../equipe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Participantes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canvas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Canvas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Canvas/canvas.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Canvas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Canvas/guiding-questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guiding Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelo
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modelo
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../modelo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modelo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fine-tunning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fine-tunning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Objetivo
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Arquitetura
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../arquitetura/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Documentação
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frontend
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Frontend
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../frontend/api-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Api
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    backend
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    backend
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/endpoints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Endpoints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_2" id="__nav_3_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/insta_controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    instaloader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/ocr_service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ocr_service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/bluesky/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    bluesky
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/main/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Main
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_4" id="__nav_3_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schemas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Schemas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../backend/schemas/schemas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schemas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Figma
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Figma
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../figma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Figma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Site
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Site
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../site/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TaCertoBrasil
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="treinamento-do-modelo-de-classificacao-de-propostas">Treinamento do Modelo de Classificação de Propostas</h1>
+<h2 id="1-objetivo">1. Objetivo</h2>
+<p>O treinamento tem como objetivo adaptar o modelo <strong>Mistral 7B Instruct v0.3</strong> para classificar textos relacionados a propostas de candidatos como:</p>
+<ul>
+<li><code>true</code>: proposta verdadeira;</li>
+<li><code>false</code>: proposta falsa ou distorcida.</li>
+</ul>
+<p>O modelo é treinado utilizando <strong>Supervised Fine-Tuning (SFT)</strong> com <strong>LoRA</strong>, por meio da biblioteca <strong>Unsloth</strong>.</p>
+<p>Ao final do processo, o modelo treinado é exportado para o formato <strong>GGUF</strong>, utilizando a quantização <strong>Q4_K_M</strong>, permitindo sua execução posteriormente em ferramentas como <code>llama.cpp</code> e LM Studio.</p>
+<hr />
+<h1 id="2-visao-geral-do-processo">2. Visão geral do processo</h1>
+<p>O treinamento é dividido nas seguintes etapas:</p>
+<div class="highlight"><pre><span></span><code>Instalação das dependências
+          ↓
+Verificação da GPU
+          ↓
+Leitura do dataset original
+          ↓
+Divisão das propostas em trechos
+          ↓
+Geração de propostas falsas
+          ↓
+Construção do dataset
+          ↓
+Preparação do modelo Mistral 7B
+          ↓
+Aplicação de LoRA
+          ↓
+Formatação dos prompts
+          ↓
+Divisão em treino e validação
+          ↓
+Treinamento SFT
+          ↓
+Exportação para GGUF
+          ↓
+Modelo quantizado Q4_K_M
+</code></pre></div>
+<hr />
+<h1 id="3-ambiente-utilizado">3. Ambiente utilizado</h1>
+<p>O treinamento foi desenvolvido para execução em ambiente com <strong>GPU NVIDIA</strong>, utilizando CUDA.</p>
+<p>As principais tecnologias utilizadas são:</p>
+<table>
+<thead>
+<tr>
+<th>Tecnologia</th>
+<th>Função</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PyTorch</td>
+<td>Execução do treinamento e operações de GPU</td>
+</tr>
+<tr>
+<td>Unsloth</td>
+<td>Otimização do fine-tuning do modelo</td>
+</tr>
+<tr>
+<td>Transformers</td>
+<td>Manipulação do modelo e tokenizer</td>
+</tr>
+<tr>
+<td>TRL</td>
+<td>Implementação do treinamento SFT</td>
+</tr>
+<tr>
+<td>PEFT</td>
+<td>Aplicação do LoRA</td>
+</tr>
+<tr>
+<td>BitsAndBytes</td>
+<td>Otimizações e quantização</td>
+</tr>
+<tr>
+<td>Datasets</td>
+<td>Conversão e gerenciamento dos datasets</td>
+</tr>
+<tr>
+<td>Pandas</td>
+<td>Manipulação dos arquivos CSV</td>
+</tr>
+<tr>
+<td>Scikit-learn</td>
+<td>Divisão entre treino e validação</td>
+</tr>
+<tr>
+<td>Google Generative AI</td>
+<td>Geração das propostas falsas</td>
+</tr>
+<tr>
+<td>GGUF</td>
+<td>Formato utilizado para distribuição do modelo treinado</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="4-instalacao-das-dependencias">4. Instalação das dependências</h1>
+<h2 id="bloco-1-preparacao-do-ambiente">Bloco 1 — Preparação do ambiente</h2>
+<p>Antes de importar determinadas bibliotecas, é necessário instalar suas dependências.</p>
+<p>O ambiente utiliza o <code>uv</code> como gerenciador de pacotes:</p>
+<div class="highlight"><pre><span></span><code><span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="n">uv</span>
+</code></pre></div>
+<p>Em seguida são instaladas versões específicas do PyTorch compatíveis com CUDA 12.1:</p>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">torch</span><span class="o">==</span><span class="mf">2.5.1</span> <span class="n">torchvision</span><span class="o">==</span><span class="mf">0.20.1</span> <span class="n">torchaudio</span><span class="o">==</span><span class="mf">2.5.1</span> \
+    <span class="o">--</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">whl</span><span class="o">/</span><span class="n">cu121</span>
+</code></pre></div>
+<p>Também é instalado o <code>xformers</code>, utilizado para otimizações relacionadas às operações de atenção:</p>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">xformers</span> \
+    <span class="o">--</span><span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">pytorch</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">whl</span><span class="o">/</span><span class="n">cu121</span>
+</code></pre></div>
+<p>As principais bibliotecas utilizadas no fine-tuning são instaladas posteriormente:</p>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">unsloth</span> <span class="n">unsloth</span><span class="o">-</span><span class="n">zoo</span> <span class="n">torchao</span>
+<span class="err">!</span><span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">accelerate</span> <span class="n">transformers</span> <span class="n">trl</span> <span class="n">peft</span> <span class="n">bitsandbytes</span> <span class="n">datasets</span>
+</code></pre></div>
+<p>Por fim, são instaladas bibliotecas auxiliares:</p>
+<div class="highlight"><pre><span></span><code><span class="err">!</span><span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">setuptools</span>
+<span class="err">!</span><span class="n">uv</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pandas</span> <span class="n">scikit</span><span class="o">-</span><span class="n">learn</span> <span class="n">google</span><span class="o">-</span><span class="n">generativeai</span> <span class="n">matplotlib</span> <span class="n">ipywidgets</span>
+</code></pre></div>
+<h3 id="observacao">Observação</h3>
+<p>Este bloco deve ser executado antes dos blocos que importam bibliotecas como <code>torch</code>, <code>unsloth</code>, <code>transformers</code> e <code>trl</code>.</p>
+<hr />
+<h1 id="5-verificacao-do-hardware">5. Verificação do hardware</h1>
+<h2 id="bloco-2-inicializacao-do-ambiente">Bloco 2 — Inicialização do ambiente</h2>
+<p>Após a instalação, são importadas as bibliotecas utilizadas no treinamento.</p>
+<p>Uma verificação é realizada para identificar se uma GPU CUDA está disponível:</p>
+<div class="highlight"><pre><span></span><code><span class="n">device</span> <span class="o">=</span> <span class="s2">"cuda"</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">"cpu"</span>
+</code></pre></div>
+<p>Caso exista uma GPU, seu nome também é exibido:</p>
+<div class="highlight"><pre><span></span><code><span class="n">gpu_name</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div>
+<p>O resultado permite confirmar se o treinamento será executado utilizando GPU.</p>
+<p>Exemplo:</p>
+<div class="highlight"><pre><span></span><code>Iniciando Pipeline em: cuda | Dispositivo: NVIDIA Tesla T4
+</code></pre></div>
+<p>O treinamento com GPU é importante porque modelos como o Mistral 7B possuem grande quantidade de parâmetros e apresentam tempo de treinamento significativamente maior quando executados somente em CPU.</p>
+<hr />
+<h1 id="6-configuracao-da-api-utilizada-para-geracao-de-dados">6. Configuração da API utilizada para geração de dados</h1>
+<p>O treinamento utiliza uma API generativa para produzir exemplos falsos a partir de propostas reais.</p>
+<p>A chave da API é obtida por meio da variável de ambiente:</p>
+<div class="highlight"><pre><span></span><code><span class="n">api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"GOOGLE_API_KEY"</span><span class="p">)</span>
+</code></pre></div>
+<p>Caso a chave não esteja configurada, o processo é interrompido:</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="ow">not</span> <span class="n">api_key</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"GOOGLE_API_KEY não encontrada no arquivo .env!"</span><span class="p">)</span>
+</code></pre></div>
+<p>Depois disso, a API é configurada e o modelo generativo é inicializado.</p>
+<blockquote>
+<p>A chave da API não deve ser armazenada diretamente no código-fonte ou no notebook compartilhado. Deve ser disponibilizada por variável de ambiente ou mecanismo equivalente de configuração.</p>
+</blockquote>
+<hr />
+<h1 id="7-preparacao-dos-dados">7. Preparação dos dados</h1>
+<h2 id="71-dataset-original">7.1 Dataset original</h2>
+<p>O treinamento parte do arquivo:</p>
+<div class="highlight"><pre><span></span><code>com_propostas.csv
+</code></pre></div>
+<p>O arquivo é carregado utilizando:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_original</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s2">"./com_propostas.csv"</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="s2">";"</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="o">=</span><span class="s2">"latin1"</span>
+<span class="p">)</span>
+</code></pre></div>
+<p>O dataset contém informações dos candidatos e suas respectivas propostas.</p>
+<p>Entre os campos utilizados estão:</p>
+<ul>
+<li><code>NM_CANDIDATO</code>;</li>
+<li><code>NM_URNA_CANDIDATO</code>;</li>
+<li><code>PROPOSTA</code>.</li>
+</ul>
+<p>As colunas são normalizadas para letras maiúsculas:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_original</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">df_original</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h1 id="8-divisao-das-propostas-em-trechos">8. Divisão das propostas em trechos</h1>
+<p>Propostas muito extensas são divididas em trechos menores antes da geração dos dados falsos.</p>
+<p>A função:</p>
+<div class="highlight"><pre><span></span><code><span class="n">chunk_texto</span><span class="p">()</span>
+</code></pre></div>
+<p>recebe uma proposta e utiliza como limite padrão:</p>
+<div class="highlight"><pre><span></span><code>1000 caracteres
+</code></pre></div>
+<p>A divisão tenta preservar:</p>
+<ol>
+<li>quebras de parágrafo;</li>
+<li>frases;</li>
+<li>pontuação.</li>
+</ol>
+<p>Isso evita enviar propostas excessivamente grandes para a API generativa e permite trabalhar com unidades menores de texto durante a preparação do dataset.</p>
+<p>Cada trecho recebe um identificador:</p>
+<div class="highlight"><pre><span></span><code>CHUNK_ID
+</code></pre></div>
+<p>que indica sua posição dentro da proposta original.</p>
+<hr />
+<h1 id="9-geracao-de-propostas-falsas">9. Geração de propostas falsas</h1>
+<h2 id="91-criacao-dos-exemplos-sinteticos">9.1 Criação dos exemplos sintéticos</h2>
+<p>Para cada proposta real, o sistema solicita à API generativa uma versão falsa ou distorcida.</p>
+<p>A função responsável é:</p>
+<div class="highlight"><pre><span></span><code><span class="n">gerar_proposta_falsa</span><span class="p">()</span>
+</code></pre></div>
+<p>O prompt informa:</p>
+<ul>
+<li>o candidato;</li>
+<li>a proposta real;</li>
+<li>a necessidade de produzir uma versão falsa.</li>
+</ul>
+<p>A proposta falsa deve manter aparência plausível, mas introduzir alterações como:</p>
+<ul>
+<li>exageros;</li>
+<li>alterações no público-alvo;</li>
+<li>custos inviáveis;</li>
+<li>regras absurdas;</li>
+<li>distorções da proposta original.</li>
+</ul>
+<p>O objetivo é criar exemplos negativos para que o modelo aprenda a diferenciar propostas verdadeiras de versões falsas.</p>
+<hr />
+<h1 id="10-tratamento-de-limites-da-api">10. Tratamento de limites da API</h1>
+<p>A geração dos dados falsos possui tratamento para o erro HTTP <code>429</code>, que indica que o limite de utilização da API foi atingido.</p>
+<p>Quando isso ocorre, o código aguarda progressivamente:</p>
+<div class="highlight"><pre><span></span><code>15 segundos
+30 segundos
+45 segundos
+...
+</code></pre></div>
+<p>até atingir o número máximo de tentativas configurado.</p>
+<p>Isso evita que uma interrupção temporária da API encerre imediatamente todo o processo de preparação do dataset.</p>
+<hr />
+<h1 id="11-construcao-do-dataset">11. Construção do dataset</h1>
+<p>Para cada trecho da proposta são criados dois possíveis registros:</p>
+<h3 id="registro-verdadeiro">Registro verdadeiro</h3>
+<div class="highlight"><pre><span></span><code>LABEL_CATEGORY = true
+</code></pre></div>
+<p>Contém o trecho original da proposta.</p>
+<h3 id="registro-falso">Registro falso</h3>
+<div class="highlight"><pre><span></span><code>LABEL_CATEGORY = false
+</code></pre></div>
+<p>Contém a proposta falsa gerada pela API.</p>
+<p>Assim, o dataset final combina exemplos positivos e negativos.</p>
+<p>A estrutura conceitual fica:</p>
+<div class="highlight"><pre><span></span><code>Proposta real
+     │
+     ├── Trecho original → true
+     │
+     └── Proposta falsa  → false
+</code></pre></div>
+<p>O resultado é salvo inicialmente como:</p>
+<div class="highlight"><pre><span></span><code>propostas_com_fakes.csv
+</code></pre></div>
+<hr />
+<h1 id="12-preparacao-dos-arquivos-para-treinamento">12. Preparação dos arquivos para treinamento</h1>
+<p>São gerados diferentes arquivos derivados do dataset.</p>
+<h2 id="dataset_apenas_falsascsv"><code>dataset_apenas_falsas.csv</code></h2>
+<p>Contém somente os registros classificados como:</p>
+<div class="highlight"><pre><span></span><code>false
+</code></pre></div>
+<p>É utilizado para disponibilizar separadamente os exemplos falsos gerados.</p>
+<hr />
+<h2 id="dataset_completo_agrupadocsv"><code>dataset_completo_agrupado.csv</code></h2>
+<p>Contém os registros completos, organizados por candidato e categoria.</p>
+<p>Essa versão facilita a inspeção dos dados.</p>
+<hr />
+<h2 id="dataset_treino_embaralhadocsv"><code>dataset_treino_embaralhado.csv</code></h2>
+<p>É criada uma cópia embaralhada do dataset:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df_final</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</code></pre></div>
+<p>O <code>random_state=42</code> garante que o embaralhamento possa ser reproduzido.</p>
+<p>Essa versão é utilizada como base para a divisão entre treinamento e validação.</p>
+<hr />
+<h1 id="13-carregamento-do-modelo">13. Carregamento do modelo</h1>
+<h2 id="bloco-4-mistral-7b">Bloco 4 — Mistral 7B</h2>
+<p>O modelo utilizado como base é o:</p>
+<div class="highlight"><pre><span></span><code>Mistral 7B Instruct v0.3
+</code></pre></div>
+<p>O carregamento utiliza a biblioteca Unsloth:</p>
+<div class="highlight"><pre><span></span><code><span class="n">FastLanguageModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">()</span>
+</code></pre></div>
+<p>O treinamento utiliza:</p>
+<div class="highlight"><pre><span></span><code>max_seq_length = 4096
+load_in_4bit = True
+</code></pre></div>
+<p>A utilização de 4 bits reduz o consumo de memória da GPU e permite trabalhar com o modelo em hardware com recursos mais limitados.</p>
+<hr />
+<h1 id="14-fine-tuning-utilizando-lora">14. Fine-tuning utilizando LoRA</h1>
+<p>Após o carregamento do modelo, é aplicada uma configuração <strong>LoRA (Low-Rank Adaptation)</strong>.</p>
+<p>O rank utilizado é:</p>
+<div class="highlight"><pre><span></span><code>r = 32
+</code></pre></div>
+<p>Os módulos adaptados incluem:</p>
+<div class="highlight"><pre><span></span><code>q_proj
+k_proj
+v_proj
+o_proj
+gate_proj
+up_proj
+down_proj
+</code></pre></div>
+<p>Esses módulos estão relacionados às camadas de atenção e projeções internas do modelo.</p>
+<p>O LoRA permite adaptar o modelo sem atualizar todos os seus parâmetros originais.</p>
+<p>Em vez de realizar um fine-tuning completo:</p>
+<div class="highlight"><pre><span></span><code>Mistral 7B
+    ↓
+Atualização de todos os parâmetros
+</code></pre></div>
+<p>é utilizada uma adaptação de menor custo:</p>
+<div class="highlight"><pre><span></span><code>Mistral 7B
+    +
+Camadas LoRA
+    ↓
+Modelo adaptado
+</code></pre></div>
+<p>Isso reduz o consumo de memória e o custo computacional do treinamento.</p>
+<hr />
+<h1 id="15-fonte-utilizada-no-prompt">15. Fonte utilizada no prompt</h1>
+<p>O treinamento associa as propostas ao candidato e à fonte dos dados.</p>
+<p>A fonte utilizada no dataset é:</p>
+<div class="highlight"><pre><span></span><code>https://dadosabertos.tse.jus.br/dataset/candidatos-2026
+</code></pre></div>
+<h3 id="atencao">Atenção</h3>
+<p>O bloco que adiciona essa informação ao dataset está marcado no notebook como:</p>
+<div class="highlight"><pre><span></span><code>NÃO RODE ISSO, IGNORE
+</code></pre></div>
+<p>Portanto, essa etapa <strong>não deve ser considerada parte obrigatória do fluxo atual de treinamento</strong> sem que o dataset seja preparado adequadamente.</p>
+<hr />
+<h1 id="16-formatacao-dos-prompts">16. Formatação dos prompts</h1>
+<h2 id="bloco-5">Bloco 5</h2>
+<p>Os registros são transformados em um formato textual que será utilizado pelo SFT.</p>
+<p>O modelo recebe uma instrução estruturada contendo:</p>
+<div class="highlight"><pre><span></span><code>Instrução
+Candidato
+Fonte
+Conteúdo / Proposta
+Resposta
+</code></pre></div>
+<p>Conceitualmente:</p>
+<div class="highlight"><pre><span></span><code>### Instrução:
+Classifique o texto ...
+
+### Candidato:
+...
+
+### Fonte:
+...
+
+### Conteúdo / Proposta:
+...
+
+### Resposta:
+true/false
+</code></pre></div>
+<p>O valor de <code>LABEL_CATEGORY</code> é utilizado como resposta esperada.</p>
+<p>O <code>tokenizer.eos_token</code> é adicionado ao final de cada exemplo para indicar o término da sequência.</p>
+<hr />
+<h1 id="17-divisao-entre-treinamento-e-validacao">17. Divisão entre treinamento e validação</h1>
+<p>O dataset é dividido em:</p>
+<div class="highlight"><pre><span></span><code>80% → treinamento
+20% → validação
+</code></pre></div>
+<p>A divisão utiliza:</p>
+<div class="highlight"><pre><span></span><code><span class="n">train_test_split</span><span class="p">()</span>
+</code></pre></div>
+<p>com estratificação pela coluna:</p>
+<div class="highlight"><pre><span></span><code>LABEL_CATEGORY
+</code></pre></div>
+<p>A estratificação é importante para preservar a proporção entre exemplos <code>true</code> e <code>false</code> nos dois conjuntos.</p>
+<p>O resultado é:</p>
+<div class="highlight"><pre><span></span><code>dataset_treino
+dataset_validacao
+</code></pre></div>
+<hr />
+<h1 id="18-treinamento-sft">18. Treinamento SFT</h1>
+<h2 id="bloco-6">Bloco 6</h2>
+<p>O treinamento utiliza o <code>SFTTrainer</code>, da biblioteca TRL.</p>
+<p>SFT significa <strong>Supervised Fine-Tuning</strong>, ou ajuste fino supervisionado.</p>
+<p>O modelo recebe exemplos no formato:</p>
+<div class="highlight"><pre><span></span><code>entrada → resposta esperada
+</code></pre></div>
+<p>e aprende a reproduzir a classificação correta.</p>
+<h3 id="principais-configuracoes">Principais configurações</h3>
+<table>
+<thead>
+<tr>
+<th>Parâmetro</th>
+<th style="text-align: right;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Batch por dispositivo</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>Gradient accumulation</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>Épocas</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>Learning rate</td>
+<td style="text-align: right;">2 × 10⁻⁴</td>
+</tr>
+<tr>
+<td>Warmup ratio</td>
+<td style="text-align: right;">0,05</td>
+</tr>
+<tr>
+<td>Weight decay</td>
+<td style="text-align: right;">0,01</td>
+</tr>
+<tr>
+<td>Otimizador</td>
+<td style="text-align: right;">AdamW 8-bit</td>
+</tr>
+<tr>
+<td>Scheduler</td>
+<td style="text-align: right;">Linear</td>
+</tr>
+<tr>
+<td>Seed</td>
+<td style="text-align: right;">3407</td>
+</tr>
+<tr>
+<td>Tamanho máximo da sequência</td>
+<td style="text-align: right;">4096</td>
+</tr>
+</tbody>
+</table>
+<h3 id="gradient-accumulation">Gradient Accumulation</h3>
+<p>A configuração:</p>
+<div class="highlight"><pre><span></span><code>per_device_train_batch_size = 4
+gradient_accumulation_steps = 4
+</code></pre></div>
+<p>permite acumular gradientes de vários lotes antes de atualizar os pesos do modelo.</p>
+<p>Isso possibilita utilizar um batch efetivo maior sem exigir que todos os exemplos sejam carregados simultaneamente na memória da GPU.</p>
+<hr />
+<h1 id="19-precisao-numerica-utilizada-no-treinamento">19. Precisão numérica utilizada no treinamento</h1>
+<p>O treinamento verifica automaticamente se a GPU oferece suporte a BF16:</p>
+<div class="highlight"><pre><span></span><code><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_bf16_supported</span><span class="p">()</span>
+</code></pre></div>
+<p>Quando suportado, utiliza:</p>
+<div class="highlight"><pre><span></span><code>BF16
+</code></pre></div>
+<p>Caso contrário, utiliza:</p>
+<div class="highlight"><pre><span></span><code>FP16
+</code></pre></div>
+<p>Essa estratégia permite adaptar o treinamento às capacidades do hardware disponível.</p>
+<hr />
+<h1 id="20-execucao-do-treinamento">20. Execução do treinamento</h1>
+<p>O treinamento é iniciado com:</p>
+<div class="highlight"><pre><span></span><code><span class="n">trainer</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</code></pre></div>
+<p>Durante o processo são registrados logs periódicos:</p>
+<div class="highlight"><pre><span></span><code>logging_steps = 5
+</code></pre></div>
+<p>Ao final, o treinamento gera os artefatos dentro do diretório:</p>
+<div class="highlight"><pre><span></span><code>outputs_propostas/
+</code></pre></div>
+<hr />
+<h1 id="21-exportacao-para-gguf">21. Exportação para GGUF</h1>
+<h2 id="bloco-7">Bloco 7</h2>
+<p>Depois do treinamento, o modelo é exportado para o formato <strong>GGUF</strong>.</p>
+<p>O diretório de saída é:</p>
+<div class="highlight"><pre><span></span><code>modelo_propostas_gguf_v3
+</code></pre></div>
+<p>A quantização utilizada é:</p>
+<div class="highlight"><pre><span></span><code>Q4_K_M
+</code></pre></div>
+<p>A exportação é realizada por:</p>
+<div class="highlight"><pre><span></span><code><span class="n">model</span><span class="o">.</span><span class="n">save_pretrained_gguf</span><span class="p">()</span>
+</code></pre></div>
+<p>O resultado é um modelo que pode ser utilizado posteriormente por ferramentas compatíveis com GGUF, como:</p>
+<ul>
+<li><code>llama.cpp</code>;</li>
+<li>LM Studio;</li>
+<li>outros servidores de inferência compatíveis.</li>
+</ul>
+<hr />
+<h1 id="22-resultado-final">22. Resultado final</h1>
+<p>Ao finalizar todas as etapas, o fluxo produz um modelo baseado no Mistral 7B adaptado para o problema de classificação de propostas.</p>
+<p>A estrutura geral pode ser representada como:</p>
+<div class="highlight"><pre><span></span><code>Dataset TSE
+    │
+    ▼
+Propostas reais
+    │
+    ▼
+Divisão em trechos
+    │
+    ├───────────────┐
+    ▼               ▼
+Trecho real      Geração de
+   true          proposta falsa
+                     │
+                     ▼
+                   false
+    │               │
+    └───────┬───────┘
+            ▼
+     Dataset balanceado
+            │
+            ▼
+    Treino / Validação
+        80% / 20%
+            │
+            ▼
+       Mistral 7B
+            +
+           LoRA
+            │
+            ▼
+        SFTTrainer
+            │
+            ▼
+     Modelo treinado
+            │
+            ▼
+       Quantização
+          Q4_K_M
+            │
+            ▼
+          GGUF
+</code></pre></div>
+<hr />
+<h1 id="23-arquivo-final-do-modelo">23. Arquivo final do modelo</h1>
+<p>O principal artefato produzido pelo treinamento é o modelo GGUF localizado no diretório:</p>
+<div class="highlight"><pre><span></span><code>modelo_propostas_gguf_v3/
+</code></pre></div>
+<p>Esse modelo pode posteriormente ser utilizado pelo serviço de inferência do projeto.</p>
+<p>No ambiente de produção, o modelo pode ser carregado por um servidor compatível com GGUF, como <code>llama.cpp</code>, permitindo que a API do projeto envie o texto da publicação para classificação.</p>
+<hr />
+<h1 id="24-relacao-com-o-sistema-ta-certo-brasil">24. Relação com o sistema Ta Certo Brasil</h1>
+<p>O treinamento é responsável pela etapa de <strong>adaptação do modelo</strong>.</p>
+<p>A aplicação em produção ocorre posteriormente:</p>
+<div class="highlight"><pre><span></span><code>Instagram
+    ↓
+Extração da publicação
+    ↓
+OCR
+    ↓
+Texto extraído
+    ↓
+Modelo treinado
+    ↓
+Classificação
+    ↓
+Resposta da aplicação
+</code></pre></div>
+<p>Portanto, o notebook de treinamento <strong>não faz parte diretamente da execução da API</strong>. Ele é utilizado para gerar o modelo que posteriormente será disponibilizado pelo serviço de inferência.</p>
+<hr />
+<h1 id="25-dependencias-entre-os-blocos">25. Dependências entre os blocos</h1>
+<p>A ordem recomendada de execução é:</p>
+<div class="highlight"><pre><span></span><code>Bloco 1
+  ↓
+Bloco 2
+  ↓
+Preparação dos dados
+  ↓
+Bloco 4
+  ↓
+Bloco 5
+  ↓
+Bloco 6
+  ↓
+Bloco 7
+</code></pre></div>
+<p>O bloco de geração de propostas falsas deve ser executado antes da preparação dos datasets utilizados no treinamento.</p>
+<p>O bloco marcado como <strong>"NÃO RODE ISSO, IGNORE" não faz parte da sequência obrigatória</strong>.</p>
+<hr />
+<h1 id="26-cuidados-para-reproducao-do-treinamento">26. Cuidados para reprodução do treinamento</h1>
+<p>Para reproduzir o treinamento, é necessário:</p>
+<ol>
+<li>utilizar um ambiente com GPU compatível;</li>
+<li>instalar as dependências antes dos imports;</li>
+<li>disponibilizar o arquivo <code>com_propostas.csv</code>;</li>
+<li>configurar a variável <code>GOOGLE_API_KEY</code>;</li>
+<li>executar a geração das propostas falsas;</li>
+<li>gerar o dataset de treinamento;</li>
+<li>carregar o modelo base Mistral 7B;</li>
+<li>executar o fine-tuning com LoRA;</li>
+<li>exportar o modelo para GGUF.</li>
+</ol>
+<p>Além disso, a geração das propostas falsas depende de uma API externa e pode estar sujeita a limites de utilização e disponibilidade.</p>
+<hr />
+<h1 id="27-resumo-tecnico">27. Resumo técnico</h1>
+<p>O treinamento utiliza <strong>Supervised Fine-Tuning (SFT)</strong> sobre o <strong>Mistral 7B Instruct v0.3</strong>, com <strong>LoRA</strong> para reduzir o custo computacional da adaptação.</p>
+<p>O dataset é construído a partir de propostas reais, obtidas dos dados eleitorais, e complementado por propostas falsas sinteticamente geradas. As amostras são divididas em conjuntos de treinamento e validação na proporção de 80/20.</p>
+<p>Após quatro épocas de treinamento, o modelo é exportado em <strong>GGUF com quantização Q4_K_M</strong>, permitindo sua utilização em ambientes de inferência locais ou remotos compatíveis com esse formato.</p>
+<p>O resultado final é um modelo especializado na tarefa de classificação de propostas verdadeiras e falsas, utilizado posteriormente pelo sistema <strong>Ta Certo Brasil</strong>.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Última atualização">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="7 de outubro de 2026 15:56:27 UTC">7 de outubro de 2026</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Criado em">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="7 de outubro de 2026 15:56:27 UTC">7 de outubro de 2026</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "toc.integrate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
