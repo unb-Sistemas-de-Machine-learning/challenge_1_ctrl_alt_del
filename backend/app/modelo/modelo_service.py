@@ -70,6 +70,22 @@ class ModeloService:
 
         - Não adicione nenhum campo além de:
         "verdict" e "responseText".
+
+        Se o conteúdo NÃO for uma proposta de governo:
+
+        - "verdict" DEVE ser exatamente:
+        "Não trata-se de uma proposta de governo"
+
+        - "responseText" DEVE existir obrigatoriamente.
+
+        - "responseText" deve ser uma explicação breve informando que o conteúdo não apresenta uma proposta de governo.
+
+        Exemplo obrigatório:
+
+        {
+            "verdict": "Não trata-se de uma proposta de governo",
+            "responseText": "O conteúdo analisado não apresenta uma proposta de governo."
+}
         """
 
     def response_model(self,post: PostPreviewPanel, text: str):

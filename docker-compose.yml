@@ -7,6 +7,8 @@ services:
     ports:
       - "8000:8000"
     environment:
+      HF_SPACE_URL: ${HF_SPACE_URL}
+      MODEL_PROVIDER: ${MODEL_PROVIDER}
       FRONTEND_URL: ${FRONTEND_URL}
       USUARIO: ${USUARIO}
       PASSWORD: ${PASSWORD}
