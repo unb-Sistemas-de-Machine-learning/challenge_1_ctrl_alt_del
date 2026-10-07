@@ -58,3 +58,5 @@ plugins:
 markdown_extensions:
   - attr_list
   - md_in_html
+  - pymdownx.superfences
+  - pymdownx.highlight
