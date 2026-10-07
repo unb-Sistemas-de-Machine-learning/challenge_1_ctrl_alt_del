@@ -1,7 +1,7 @@
 repo_name: Ctrl Alt Del
 repo_url: https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del
 site_name: Ctrl Alt Del
-site_url: https://github.com/unb-Sistemas-de-Machine-learning/challenge_1_ctrl_alt_del
+site_url: https://unb-sistemas-de-machine-learning.github.io/challenge_1_ctrl_alt_del
 
 docs_dir: docs
 theme:
@@ -35,7 +35,7 @@ nav:
       - Dados: home/dados.md
       - Participantes: equipe.md
   - Canvas:
-      - Canvas: Canvas/canvas.md
+      - Canvas: Canvas/Canvas.md
       - Guiding Questions: Canvas/guiding-questions.md
   - Projeto:
       - Modelo: projeto/modelo.md
@@ -54,8 +54,6 @@ nav:
       - Figma: figma.md
   - Site:
       - TaCertoBrasil: site.md
-
-
 plugins:
   - git-revision-date-localized:
       type: date
