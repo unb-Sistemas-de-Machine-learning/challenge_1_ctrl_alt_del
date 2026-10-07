@@ -26,11 +26,6 @@ const checks = [
     description:
       "Removemos HTML, menus e propaganda antes de qualquer análise.",
   },
-  {
-    title: "Relatório interpretável",
-    description:
-      "Mostramos o percentual de certeza e destacamos os termos que mais influenciaram a predição.",
-  },
 ];
 
 export default function Home() {

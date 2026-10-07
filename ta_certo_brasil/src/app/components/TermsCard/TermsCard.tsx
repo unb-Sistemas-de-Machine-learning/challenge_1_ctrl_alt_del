@@ -280,7 +280,7 @@ export default function TermsCard({ isOpen, onClose }: TermsCardProps) {
             </section>
 
             <p className="border-t border-zinc-800 pt-5 text-xs text-zinc-600">
-              Última atualização: setembro de 2026
+              Última atualização: outubro de 2026
             </p>
 
           </div>
