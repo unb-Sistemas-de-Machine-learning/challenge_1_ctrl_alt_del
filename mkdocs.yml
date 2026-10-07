@@ -18,11 +18,6 @@ theme:
     - search.highlight
 
 
-extra:
-  announcement: "🚀 Nova versão disponível! Veja as novidades."
-
-copyright: Copyright &copy; 2024 Minha Empresa
-
 extra_css:
   - stylesheets/style.css
   - stylesheets/extra.css
@@ -35,7 +30,7 @@ nav:
       - Dados: home/dados.md
       - Participantes: equipe.md
   - Canvas:
-      - Canvas: Canvas/Canvas.md
+      - Canvas: Canvas/canvas.md
       - Guiding Questions: Canvas/guiding-questions.md
   - Projeto:
       - Modelo: projeto/modelo.md
@@ -59,3 +54,7 @@ plugins:
       type: date
       locale: pt_BR
       enable_creation_date: true
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
