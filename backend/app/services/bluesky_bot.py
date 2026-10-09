@@ -4,26 +4,22 @@ import os
 class BlueskyBot:
 
     @staticmethod
-    def real(message:str, url:str):
+    def real(mensagem:str, url:str):
         message = (
-            f"O link {url} foi verificado e é tratado como real "
+            f"O link: \n{url} \nfoi verificado e é tratado como REAL "
             f"pelas métricas do Modelo.\n\n"
-            f"Resposta do Modelo: {message}\n\n"
-            f"Por favor, não trate esse POST como verdade absoluta, "
-            f"pois o Modelo pode cometer erros.\n\n"
-            f"#FakeNews #VerificaçãoDeFatos"
+            f"""{mensagem}"""
+            f"Não trate esse POST como VERDADE absoluta"
         )
         return message
 
     @staticmethod
-    def fake(message:str, url:str):
+    def fake(mensagem:str, url:str):
         message = (
-            f"O link {url} foi verificado e é tratado como falso "
+            f"O link: \n{url} \nfoi verificado e é tratado como FALSO "
             f"pelas métricas do Modelo.\n\n"
-            f"Resposta do Modelo: {message}\n\n"
-            f"Por favor, não trate esse POST como mentira absoluta, "
-            f"pois o Modelo pode cometer erros.\n\n"
-            f"#FakeNews #VerificaçãoDeFatos"
+            f"""{mensagem}"""
+            f"Não trate esse POST como MENTIRA absoluta"
         )
         return message
 

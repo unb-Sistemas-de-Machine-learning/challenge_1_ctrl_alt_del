@@ -88,9 +88,15 @@ class ModeloService:
 }
         """
 
-    def response_model(self,post: PostPreviewPanel, text: str):
-        conteudo = "Título do POST: " + post.extractedText + " Descrição do Post: " + post.caption + " \n Textos de imagem do post: " + text
+    def response_model(self, post: PostPreviewPanel, text: str):
+        conteudo = (
+            f"Título do POST: {post.extractedText}\n"
+            f"Descrição do Post: {post.caption}\n"
+            f"Textos de imagem do post: {text}"
+        )
+
         prompt = self.prompt()
+
         if self.model == "ollama":
             resposta = self.ollama_client.chat(
                 model=self.model_name,
@@ -101,21 +107,32 @@ class ModeloService:
                     },
                     {
                         "role": "user",
-                        "content": f"Conteúdo para ser analisado:\n\n{conteudo}"
+                        "content": (
+                            "Conteúdo para ser analisado:\n\n"
+                            f"{conteudo}"
+                        )
                     }
-                ]
+                ],
+                options={
+                    "num_ctx": 4096,
+                    "temperature": 0.0,
+                    "max_tokens": 100
+                },
+                format="json"
             )
 
             response_text = resposta["message"]["content"]
-        
+            print(response_text)
+
         else:
             payload = {
                 "messages": [
                     {"role": "system", "content": prompt},
                     {"role": "user", "content": f"Conteúdo para ser analisado:\n\n{conteudo}"}
                 ],
-                "max_tokens": 512,
-                "temperature": 0.1
+                "max_tokens": 100,
+                "temperature": 0.0,
+                "num_ctx": 4096
             }
             response = requests.post(
                 f"{self.api_url}/v1/chat/completions",
@@ -128,5 +145,8 @@ class ModeloService:
 
         clean_text = response_text.strip()
         data = json.loads(clean_text)
-
-        return data
+        
+        return {
+            "verdict": data["verdict"],
+            "responseText": data["responseText"]
+        }

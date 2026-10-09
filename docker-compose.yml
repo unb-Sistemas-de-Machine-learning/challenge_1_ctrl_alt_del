@@ -8,6 +8,7 @@ services:
       - "8000:8000"
     environment:
       HF_SPACE_URL: ${HF_SPACE_URL}
+      OLLAMA_HOST: ${OLLAMA_HOST}
       MODEL_PROVIDER: ${MODEL_PROVIDER}
       FRONTEND_URL: ${FRONTEND_URL}
       USUARIO: ${USUARIO}
